@@ -117,3 +117,17 @@ function test() {
 }
 
 test();
+
+// Fetching jokes from JokesAPI(url: https://sv443.net/jokeapi/v2/)
+async function getJokes() {
+  let joke = "";
+  const apiURL = "https://sv443.net/jokeapi/v2/joke/Programming?blacklistFlags=nsfw,religious,political,racist,sexist";
+  try {
+    const response = await fetch(apiURL);
+    const data = await response.json();
+    joke = data.setup ? `${data.setup} ... ${data.delivery}` : `${data.joke}`;
+  } catch (error) {
+    console.log("getJokes catchBlock: ", error);
+  }
+}
+getJokes();

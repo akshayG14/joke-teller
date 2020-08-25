@@ -1,6 +1,8 @@
 const button = document.getElementById("button");
 const audioElement = document.getElementById("audio");
 
+let joke = "";
+
 // VoiceRSS Javascript SDK
 const VoiceRSS = {
   speech: function (e) {
@@ -103,10 +105,11 @@ const VoiceRSS = {
   },
 };
 
-function test() {
+// passing joke to VoiceRSS API
+function tellJoke(joke) {
   VoiceRSS.speech({
     key: apiKey,
-    src: "Hello, world!",
+    src: joke,
     hl: "en-us",
     v: "Linda",
     r: 0,
@@ -116,18 +119,17 @@ function test() {
   });
 }
 
-test();
-
 // Fetching jokes from JokesAPI(url: https://sv443.net/jokeapi/v2/)
 async function getJokes() {
-  let joke = "";
   const apiURL = "https://sv443.net/jokeapi/v2/joke/Programming?blacklistFlags=nsfw,religious,political,racist,sexist";
   try {
     const response = await fetch(apiURL);
     const data = await response.json();
     joke = data.setup ? `${data.setup} ... ${data.delivery}` : `${data.joke}`;
+    tellJoke(joke);
   } catch (error) {
     console.log("getJokes catchBlock: ", error);
   }
 }
-getJokes();
+
+getJokes(); // gets the initial joke

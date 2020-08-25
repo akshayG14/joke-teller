@@ -10,9 +10,10 @@ function toggleButton() {
 
 // passing joke to VoiceRSS API
 function tellJoke(joke) {
+  const jokeString = joke.trim().replace(/ /g, "%20");
   VoiceRSS.speech({
     key: apiKey,
-    src: joke,
+    src: jokeString,
     hl: "en-us",
     v: "Linda",
     r: 0,
